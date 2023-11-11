@@ -5,7 +5,7 @@
 using namespace PriceCal;
 
 
-TEST(PriceCalculator, return_100_when_given_100)
+TEST(PriceCalculator, return_100_when_given_100_NONE_DISCOUNT)
 {
     // given
     PriceCalculator priceCalculator;
@@ -17,7 +17,7 @@ TEST(PriceCalculator, return_100_when_given_100)
     EXPECT_DOUBLE_EQ(100, cash);
 }
 
-TEST(PriceCalculator, return_81_when_given_90)
+TEST(PriceCalculator, return_81_when_given_90_PERCENT_DISCOUNT)
 {
     
     // given
@@ -30,7 +30,7 @@ TEST(PriceCalculator, return_81_when_given_90)
     EXPECT_DOUBLE_EQ(81, cash);
 }
 
-TEST(PriceCalculator, return_90_when_given_90)
+TEST(PriceCalculator, return_90_when_given_90_CASH_DISCOUNT)
 {
 
     // given
@@ -43,7 +43,7 @@ TEST(PriceCalculator, return_90_when_given_90)
     EXPECT_DOUBLE_EQ(90, cash);
 }
 
-TEST(PriceCalculator, return_80_when_given_100)
+TEST(PriceCalculator, return_80_when_given_100_CASH_DISCOUNT)
 {
 
     // given
