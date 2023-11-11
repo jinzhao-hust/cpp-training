@@ -17,11 +17,11 @@ TEST(PriceCalculator, return_100_when_given_100)
     EXPECT_DOUBLE_EQ(100, cash);
 }
 
-// TEST(PriceCalculator, return_81_when_given_90)
-// {
-//     PriceCalculator priceCalculator;
-//     priceCalculator.AcceptPrice(90, DiscountType::PERCENT_DISCOUNT);
-//     EXPECT_DOUBLE_EQ(81, test());
-// }
+TEST(PriceCalculator, return_81_when_given_90)
+{
+    PriceCalculator priceCalculator;
+    priceCalculator.AcceptPrice(90, DiscountType::PERCENT_DISCOUNT);
+    EXPECT_DOUBLE_EQ(81, test());
+}
 
 
