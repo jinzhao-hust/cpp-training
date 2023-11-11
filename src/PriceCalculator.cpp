@@ -11,7 +11,6 @@ namespace PriceCal{
         case DiscountType::NONE_DISCOUNT:
             finalPrice = price;
             return finalPrice;
-            break;
         case DiscountType::PERCENT_DISCOUNT:
             finalPrice = price * 0.9;
             return finalPrice;
