@@ -30,4 +30,15 @@ TEST(PriceCalculator, return_81_when_given_90)
     EXPECT_DOUBLE_EQ(81, cash);
 }
 
+TEST(PriceCalculator, return_90_when_given_90)
+{
 
+    // given
+    PriceCalculator priceCalculator;
+
+    // when
+    double cash = priceCalculator.AcceptPrice(90, DiscountType::CASH_DISCOUNT);
+
+    // then
+    EXPECT_DOUBLE_EQ(90, cash);
+}
