@@ -8,49 +8,33 @@ namespace PriceCalc
     double PriceCalculator::AcceptCash(const DiscountType discountType, const double money) const noexcept
     {
         double cash = 0.0;
-
+        std::unique_ptr<Discount> discount;
         switch (discountType)
         {
         case DiscountType::CASH_NORMAL:
-        {
-            std::unique_ptr<Normal> normal = std::make_unique<Normal>();
-            cash = normal->AcceptCash(money);
+            discount = std::make_unique<Normal>();
             break;
-        }
 
         case DiscountType::CASH_PERCENTOFF_10:
-        {
-            std::unique_ptr<PercentOff> percentOff = std::make_unique<PercentOff>();
-            cash = percentOff->AcceptCash(money);
+            discount = std::make_unique<PercentOff>(0.9);
             break;
-        }
 
         case DiscountType::CASH_PERCENTOFF_20:
-        {
-            const double discountRate = 0.8;
-
-            cash = money * discountRate;
+            discount = std::make_unique<PercentOff>(0.8);
             break;
-        }
 
         case DiscountType::CASH_PERCENTOFF_30:
-        {
-            const double discountRate = 0.7;
-
-            cash = money * discountRate;
+            discount = std::make_unique<PercentOff>(0.7);
             break;
-        }
 
         case DiscountType::CASH_BACK:
-        {
-            // const double threshold = 100.0;
-            // const double cashback = 20.0;
-            std::unique_ptr<CashBack> cashBack = std::make_unique<CashBack>();
-            cash = cashBack->AcceptCash(money);
+            discount= std::make_unique<CashBack>(100.0,20.0);
+            break;
+
+        default:
             break;
         }
-        }
-
+        cash = discount->AcceptCash(money);
         return cash;
     }
     
