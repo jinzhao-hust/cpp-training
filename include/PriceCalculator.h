@@ -11,6 +11,8 @@ enum class DiscountType
 
 namespace PriceCalc
 {
+    // TODO 将声明和实现拆分，注意命令规范和提交记录。
+    // TODO 尝试使用新方法，使得添加新的折扣策略时的方法相对简单。
     class PriceCalculator final
     {
     public:
