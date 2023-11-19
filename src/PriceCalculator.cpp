@@ -1,7 +1,8 @@
 #include "PriceCalculator.h"
 
 #include <cmath>
-
+#include <iostream>
+#include <memory>
 namespace PriceCalc
 {
     double PriceCalculator::AcceptCash(const DiscountType discountType, const double money) const noexcept
@@ -12,15 +13,15 @@ namespace PriceCalc
         {
         case DiscountType::CASH_NORMAL:
         {
-            cash = money;
+            std::unique_ptr<Normal> normal = std::make_unique<Normal>();
+            cash = normal->AcceptCash(money);
             break;
         }
 
         case DiscountType::CASH_PERCENTOFF_10:
         {
-            const double discountRate = 0.9;
-
-            cash = money * discountRate;
+            std::unique_ptr<PercentOff> percentOff = std::make_unique<PercentOff>();
+            cash = percentOff->AcceptCash(money);
             break;
         }
 
@@ -44,13 +45,13 @@ namespace PriceCalc
         {
             const double threshold = 100.0;
             const double cashback = 20.0;
-
-            cash = money - std::floor(money / threshold) * cashback;
-
+            std::unique_ptr<CashBack> cashBack = std::make_unique<CashBack>();
+            cash = cashBack->AcceptCash(money);
             break;
         }
         }
 
         return cash;
     }
+    
 } // namespace PriceCalc
