@@ -1,17 +1,19 @@
-#ifndef PRICE_CACULATOR_H_
-#define PRICE_CACULATOR_H_
-namespace PriceCal{
-    enum class DiscountType
-    {
-        NONE_DISCOUNT,
-        PERCENT_DISCOUNT,
-        CASH_DISCOUNT
-    };
+#pragma once
 
+enum class DiscountType
+{
+    CASH_NORMAL,
+    CASH_PERCENTOFF_10,
+    CASH_PERCENTOFF_20,
+    CASH_PERCENTOFF_30,
+    CASH_BACK,
+};
+
+namespace PriceCalc
+{
     class PriceCalculator final
     {
     public:
-        double AcceptPrice(const double price, const DiscountType type) const noexcept;
+        double AcceptCash(const DiscountType discountType, const double money) const noexcept;
     };
-}
-#endif
+} // namespace PriceCalc
