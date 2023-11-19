@@ -8,7 +8,6 @@ namespace PriceCalc
 {
     double PriceCalculator::AcceptCash(const DiscountType discountType, const double money) const noexcept
     {
-        double cash = 0.0;
         std::unordered_map<DiscountType, std::unique_ptr<Discount>> discountMap;
         discountMap.emplace(DiscountType::CASH_NORMAL,std::make_unique<Normal>());
         discountMap.emplace(DiscountType::CASH_PERCENTOFF_10, std::make_unique<PercentOff>(0.9));
