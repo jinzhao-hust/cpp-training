@@ -43,8 +43,8 @@ namespace PriceCalc
 
         case DiscountType::CASH_BACK:
         {
-            const double threshold = 100.0;
-            const double cashback = 20.0;
+            // const double threshold = 100.0;
+            // const double cashback = 20.0;
             std::unique_ptr<CashBack> cashBack = std::make_unique<CashBack>();
             cash = cashBack->AcceptCash(money);
             break;
