@@ -16,6 +16,11 @@ namespace PriceCalc
     class PriceCalculator final
     {
     public:
+        static PriceCalculator& GetInstance()
+        {
+            static PriceCalculator priceCalculator;
+            return priceCalculator;
+        }
         double AcceptCash(const DiscountType discountType, const double money) const noexcept;
     private:
         class Discount
