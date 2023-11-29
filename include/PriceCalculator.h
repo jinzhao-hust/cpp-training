@@ -59,6 +59,7 @@ namespace PriceCalc
         // 将构造函数声明为私有避免用户自己创建实例
         PriceCalculator()
         {
+            std::cout << "Constructor is called" << std::endl;
             discountMap.emplace(DiscountType::CASH_NORMAL, std::make_unique<Normal>());
             discountMap.emplace(DiscountType::CASH_PERCENTOFF_10, std::make_unique<PercentOff>(0.9));
             discountMap.emplace(DiscountType::CASH_PERCENTOFF_20, std::make_unique<PercentOff>(0.8));
