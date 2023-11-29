@@ -3,6 +3,7 @@
 #include <memory>
 #include <unordered_map>
 #include <iostream>
+#include <functional>
 enum class DiscountType
 {
     CASH_NORMAL,
@@ -24,29 +25,23 @@ namespace PriceCalc
         static PriceCalculator& GetInstance();
         double AcceptCash(const DiscountType discountType, const double money) const noexcept;
     private:
-        class Discount
+        class Normal final
         {
         public:
-            virtual double AcceptCash(const double money) const noexcept = 0;
-            virtual ~Discount();
-        };
-        class Normal final : public Discount
-        {
-        public:
-            double AcceptCash(const double money) const noexcept override;
+            double AcceptCash(const double money) const noexcept;
             virtual ~Normal();
         };
 
-        class PercentOff final : public Discount
+        class PercentOff final
         {
         private:
             double discountRate = 1;
         public:
             explicit PercentOff(double rate);
             virtual ~PercentOff();
-            double AcceptCash(const double money) const noexcept override;
+            double AcceptCash(const double money) const noexcept;
         };
-        class CashBack final : public Discount
+        class CashBack final
         {
             double threshold = 100.0;
             double cashback = 20.0;
@@ -54,19 +49,31 @@ namespace PriceCalc
         public:
             explicit CashBack(double threshold, double cashback);
             virtual ~CashBack();
-            double AcceptCash(const double money) const noexcept override;
+            double AcceptCash(const double money) const noexcept;
         };
         // 折扣方法表
-        std::unordered_map<DiscountType, std::unique_ptr<Discount>> discountMap;
+        std::unordered_map<DiscountType, std::function<double(double)>> discountMap;
         // 将构造函数声明为私有避免用户自己创建实例
+        Normal normal;
+        PercentOff percentOff10;
+        PercentOff percentOff20;
+        PercentOff percentOff30;
+        CashBack cashBack;
+    public:
         PriceCalculator()
+            : percentOff10(0.9), percentOff20(0.8), percentOff30(0.7), cashBack(100.0, 20.0)
         {
             std::cout << "Constructor is called" << std::endl;
-            discountMap.emplace(DiscountType::CASH_NORMAL, std::make_unique<Normal>());
-            discountMap.emplace(DiscountType::CASH_PERCENTOFF_10, std::make_unique<PercentOff>(0.9));
-            discountMap.emplace(DiscountType::CASH_PERCENTOFF_20, std::make_unique<PercentOff>(0.8));
-            discountMap.emplace(DiscountType::CASH_PERCENTOFF_30, std::make_unique<PercentOff>(0.7));
-            discountMap.emplace(DiscountType::CASH_BACK, std::make_unique<CashBack>(100.0, 20.0));
+            discountMap.emplace(DiscountType::CASH_NORMAL, [this](double money)
+                                { return normal.AcceptCash(money); });
+            discountMap.emplace(DiscountType::CASH_PERCENTOFF_10, [this](double money)
+                                { return percentOff10.AcceptCash(money); });
+            discountMap.emplace(DiscountType::CASH_PERCENTOFF_20, [this](double money)
+                                { return percentOff20.AcceptCash(money); });
+            discountMap.emplace(DiscountType::CASH_PERCENTOFF_30, [this](double money)
+                                { return percentOff30.AcceptCash(money); });
+            discountMap.emplace(DiscountType::CASH_BACK, [this](double money)
+                                { return cashBack.AcceptCash(money); });
         }
     };
 } // namespace PriceCalc

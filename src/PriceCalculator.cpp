@@ -1,14 +1,6 @@
 #include "PriceCalculator.h"
-
-#include <cmath>
-#include <iostream>
-#include <memory>
-#include <unordered_map>
 namespace PriceCalc
 {
-    // Discount成员函数实现
-    
-    PriceCalculator::Discount::~Discount(){}
     
     // Normal成员函数实现
 
@@ -57,7 +49,8 @@ namespace PriceCalc
         // 打印地址
         std::cout<<this<<std::endl;
         std::cout<<&(this->discountMap)<<std::endl;
-        return discountMap.find(discountType)->second->AcceptCash(money);
+        double result = this->discountMap.at(discountType)(money);
+        return result;
         // std::unique_ptr<Discount> discount;
         // switch (discountType)
         // {
