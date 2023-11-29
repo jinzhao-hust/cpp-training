@@ -19,6 +19,8 @@ namespace PriceCalc
     class PriceCalculator final
     {
     public:
+        PriceCalculator(const PriceCalculator &) = delete;
+        PriceCalculator &operator=(const PriceCalculator &) = delete;
         static PriceCalculator& GetInstance();
         double AcceptCash(const DiscountType discountType, const double money) const noexcept;
     private:
