@@ -53,13 +53,13 @@ namespace PriceCalc
         };
         // 折扣方法表
         std::unordered_map<DiscountType, std::function<double(double)>> discountMap;
-        // 将构造函数声明为私有避免用户自己创建实例
+        // 添加私有成员，使内部类实例的声明周期和PriceCalculator保持一致
         Normal normal;
         PercentOff percentOff10;
         PercentOff percentOff20;
         PercentOff percentOff30;
         CashBack cashBack;
-    public:
+        // 将构造函数声明为私有避免用户自己创建实例
         PriceCalculator()
             : percentOff10(0.9), percentOff20(0.8), percentOff30(0.7), cashBack(100.0, 20.0)
         {
